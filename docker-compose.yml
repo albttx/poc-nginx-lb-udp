@@ -1,9 +1,22 @@
 version: "3.5"
 services:
-  nginx:
-    image: nginx
+  gobetween:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    # image: yyyar/gobetween
+    # ports:
+      # - 1080:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./gobetween.toml:/etc/gobetween/conf/gobetween.toml
+      - ./healthcheck.sh:/healthcheck.sh
+    environment:
+      - "PATH=/bin"
+
+  # nginx:
+    # image: nginx
+    # volumes:
+      # - ./nginx.conf:/etc/nginx/nginx.conf
       # - /opt/nginx/conf.d:/etc/nginx/conf.d
       # - /opt/www:/opt/www
 
@@ -31,4 +44,4 @@ services:
       - ./cmd/udp-client:/app/
     entrypoint: go run /app/main.go
     environment:
-      - "UDP_SERVER=nginx:53"
+      - "UDP_SERVER=gobetween:53"

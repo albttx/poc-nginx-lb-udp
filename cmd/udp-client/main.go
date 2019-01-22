@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"time"
 )
 
 var (
@@ -33,6 +32,6 @@ func main() {
 		if err != nil {
 			fmt.Printf("Failed to send msg: %s, err=%v\n", msg, err)
 		}
-		time.Sleep(time.Second * 2)
+		// time.Sleep(time.Second * 2)
 	}
 }
