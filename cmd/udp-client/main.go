@@ -5,12 +5,12 @@ import (
 	"log"
 	"net"
 	"os"
-	"strconv"
 	"time"
 )
 
 var (
 	udpServer = os.Getenv("UDP_SERVER")
+	hostname  = os.Getenv("HOSTNAME")
 )
 
 func main() {
@@ -26,13 +26,10 @@ func main() {
 	defer conn.Close()
 
 	fmt.Println("udp-client start sending msg")
-	i := 0
-	for {
-		msg := strconv.Itoa(i)
-		i++
-		buf := []byte(msg)
-		fmt.Printf("sending %v", msg)
-		_, err := conn.Write(buf)
+	for i := 0; ; i++ {
+		msg := []byte(fmt.Sprintf("%s - %v", hostname, i))
+		fmt.Printf("sending %s", msg)
+		_, err := conn.Write(msg)
 		if err != nil {
 			fmt.Printf("Failed to send msg: %s, err=%v\n", msg, err)
 		}
